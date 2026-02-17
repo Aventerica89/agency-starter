@@ -1,0 +1,78 @@
+---
+interface Props {
+  position?: 'left' | 'right'
+}
+
+const { position = 'left' } = Astro.props
+---
+
+<div
+  class:list={[
+    'sidebar-layout',
+    `sidebar-layout--${position}`,
+  ]}
+  data-vf-component="Sidebar"
+  data-vf-file="src/components/layout/Sidebar.astro"
+>
+  <aside class="sidebar-layout__sidebar">
+    <slot />
+  </aside>
+  <div class="sidebar-layout__main">
+    <slot name="main" />
+  </div>
+</div>
+
+<style>
+  .sidebar-layout {
+    display: grid;
+    grid-template-columns: 16rem 1fr;
+    gap: var(--space-2xl);
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-2xl) var(--container-padding);
+  }
+
+  .sidebar-layout--right {
+    grid-template-columns: 1fr 16rem;
+  }
+
+  .sidebar-layout--right .sidebar-layout__sidebar {
+    order: 2;
+  }
+
+  .sidebar-layout--right .sidebar-layout__main {
+    order: 1;
+  }
+
+  .sidebar-layout__sidebar {
+    position: sticky;
+    top: var(--space-2xl);
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .sidebar-layout__main {
+    min-width: 0;
+  }
+
+  @media (max-width: 768px) {
+    .sidebar-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .sidebar-layout--right .sidebar-layout__sidebar {
+      order: 0;
+    }
+
+    .sidebar-layout--right .sidebar-layout__main {
+      order: 0;
+    }
+
+    .sidebar-layout__sidebar {
+      position: static;
+    }
+  }
+</style>

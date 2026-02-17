@@ -1,0 +1,156 @@
+---
+interface Props {
+  title: string
+  subtitle?: string
+  videoSrc: string
+  posterImage?: string
+  ctaText?: string
+  ctaHref?: string
+  overlay?: boolean
+}
+
+const {
+  title,
+  subtitle,
+  videoSrc,
+  posterImage,
+  ctaText,
+  ctaHref = '#',
+  overlay = true,
+} = Astro.props
+---
+
+<section
+  class="hero-video"
+  data-vf-component="HeroVideo"
+  data-vf-file="src/components/heroes/HeroVideo.astro"
+>
+  <div class="hero-video__bg">
+    <video
+      class="hero-video__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster={posterImage}
+    >
+      <source src={videoSrc} type="video/mp4" />
+    </video>
+    {posterImage && (
+      <div
+        class="hero-video__poster"
+        style={`background-image: url(${posterImage})`}
+      />
+    )}
+  </div>
+
+  {overlay && <div class="hero-video__overlay" />}
+
+  <div class="hero-video__content">
+    <h1 class="hero-video__title">{title}</h1>
+    {subtitle && <p class="hero-video__subtitle">{subtitle}</p>}
+    {ctaText && (
+      <a href={ctaHref} class="hero-video__cta">{ctaText}</a>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero-video {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    overflow: hidden;
+  }
+
+  .hero-video__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero-video__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-video__poster {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-video__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-video__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-lg);
+    max-width: var(--container-max);
+    padding: var(--space-section) var(--container-padding);
+  }
+
+  .hero-video__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-surface);
+    line-height: 1.1;
+  }
+
+  .hero-video__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-xl);
+    color: var(--color-surface);
+    opacity: 0.9;
+    max-width: 40rem;
+    line-height: 1.5;
+  }
+
+  .hero-video__cta {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--color-surface);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast),
+      box-shadow var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hero-video__cta:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (max-width: 768px) {
+    .hero-video__video {
+      display: none;
+    }
+
+    .hero-video__poster {
+      display: block;
+    }
+
+    .hero-video {
+      min-height: 60vh;
+    }
+  }
+</style>

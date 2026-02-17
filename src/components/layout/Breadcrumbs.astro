@@ -1,0 +1,84 @@
+---
+interface Props {
+  items: Array<{ label: string; href?: string }>
+}
+
+const { items } = Astro.props
+---
+
+<nav
+  class="breadcrumbs"
+  aria-label="Breadcrumb"
+  data-vf-component="Breadcrumbs"
+  data-vf-file="src/components/layout/Breadcrumbs.astro"
+>
+  <ol class="breadcrumbs__list">
+    {items.map((item, index) => {
+      const isLast = index === items.length - 1
+      return (
+        <li class="breadcrumbs__item">
+          {index > 0 && (
+            <span class="breadcrumbs__separator" aria-hidden="true">/</span>
+          )}
+          {isLast || !item.href ? (
+            <span class="breadcrumbs__current" aria-current={isLast ? 'page' : undefined}>
+              {item.label}
+            </span>
+          ) : (
+            <a href={item.href} class="breadcrumbs__link">
+              {item.label}
+            </a>
+          )}
+        </li>
+      )
+    })}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    padding: var(--space-md) var(--container-padding);
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .breadcrumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-xs);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .breadcrumbs__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .breadcrumbs__separator {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    user-select: none;
+  }
+
+  .breadcrumbs__link {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .breadcrumbs__link:hover {
+    color: var(--color-primary-dark);
+  }
+
+  .breadcrumbs__current {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+interface Props {
+  title: string
+  subtitle?: string
+  alignment?: 'left' | 'center'
+}
+
+const {
+  title,
+  subtitle,
+  alignment = 'center',
+} = Astro.props
+---
+
+<section
+  class:list={[
+    'hero-minimal',
+    `hero-minimal--${alignment}`,
+  ]}
+  data-vf-component="HeroMinimal"
+  data-vf-file="src/components/heroes/HeroMinimal.astro"
+>
+  <div class="hero-minimal__inner">
+    <h1 class="hero-minimal__title">{title}</h1>
+    {subtitle && <p class="hero-minimal__subtitle">{subtitle}</p>}
+  </div>
+</section>
+
+<style>
+  .hero-minimal {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg-alt);
+  }
+
+  .hero-minimal__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .hero-minimal--center {
+    text-align: center;
+  }
+
+  .hero-minimal--center .hero-minimal__inner {
+    align-items: center;
+  }
+
+  .hero-minimal--left {
+    text-align: left;
+  }
+
+  .hero-minimal--left .hero-minimal__inner {
+    align-items: flex-start;
+  }
+
+  .hero-minimal__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.1;
+  }
+
+  .hero-minimal__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    max-width: 40rem;
+    line-height: 1.5;
+  }
+</style>
