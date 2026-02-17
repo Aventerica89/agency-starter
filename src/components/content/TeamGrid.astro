@@ -1,0 +1,178 @@
+---
+import type { TeamMember } from '../../lib/types'
+
+interface Props {
+  title?: string
+  subtitle?: string
+  members: TeamMember[]
+  columns?: 2 | 3 | 4
+}
+
+const {
+  title,
+  subtitle,
+  members,
+  columns = 3,
+} = Astro.props
+---
+
+<section
+  class="team-grid"
+  data-vf-component="TeamGrid"
+  data-vf-file="src/components/content/TeamGrid.astro"
+>
+  <div class="team-grid__inner">
+    {(title || subtitle) && (
+      <header class="team-grid__header">
+        {title && <h2 class="team-grid__title">{title}</h2>}
+        {subtitle && <p class="team-grid__subtitle">{subtitle}</p>}
+      </header>
+    )}
+
+    <div class="team-grid__list" style={`--cols: ${columns}`}>
+      {members
+        .sort((a, b) => a.order - b.order)
+        .map((member) => (
+          <article class="team-grid__card">
+            {member.photo && (
+              <div class="team-grid__photo-wrap">
+                <img
+                  class="team-grid__photo"
+                  src={member.photo}
+                  alt={member.name}
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <div class="team-grid__info">
+              <h3 class="team-grid__name">{member.name}</h3>
+              <p class="team-grid__role">{member.role}</p>
+              <p class="team-grid__bio">{member.bio}</p>
+            </div>
+          </article>
+        ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .team-grid {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg);
+  }
+
+  .team-grid__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+  }
+
+  .team-grid__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .team-grid__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
+
+  .team-grid__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .team-grid__list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .team-grid__list {
+      grid-template-columns: repeat(
+        min(var(--cols, 3), 2),
+        1fr
+      );
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .team-grid__list {
+      grid-template-columns: repeat(var(--cols, 3), 1fr);
+    }
+  }
+
+  .team-grid__card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .team-grid__card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.02);
+  }
+
+  .team-grid__photo-wrap {
+    width: 7rem;
+    height: 7rem;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .team-grid__photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .team-grid__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .team-grid__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .team-grid__role {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+
+  .team-grid__bio {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-top: var(--space-xs);
+  }
+</style>
