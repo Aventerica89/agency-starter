@@ -1,0 +1,188 @@
+---
+interface Card {
+  name: string
+  price: string
+  description: string
+  features: string[]
+  ctaText: string
+  ctaHref: string
+}
+
+interface Props {
+  title?: string
+  cards: Card[]
+}
+
+const {
+  title = 'Our Packages',
+  cards,
+} = Astro.props
+---
+
+<section
+  class="pricing-cards"
+  data-vf-component="PricingCards"
+  data-vf-file="src/components/pricing/PricingCards.astro"
+>
+  <div class="pricing-cards__inner">
+    {title && (
+      <header class="pricing-cards__header">
+        <h2 class="pricing-cards__title">{title}</h2>
+      </header>
+    )}
+
+    <div class="pricing-cards__grid">
+      {cards.map((card) => (
+        <div class="pricing-cards__card">
+          <h3 class="pricing-cards__card-name">{card.name}</h3>
+
+          <span class="pricing-cards__price">{card.price}</span>
+
+          <p class="pricing-cards__description">{card.description}</p>
+
+          <ul class="pricing-cards__features">
+            {card.features.map((feature) => (
+              <li class="pricing-cards__feature">
+                <span class="pricing-cards__bullet" aria-hidden="true">
+                  {'\u2022'}
+                </span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+
+          <a class="pricing-cards__cta" href={card.ctaHref}>
+            {card.ctaText}
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-cards {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg-alt);
+  }
+
+  .pricing-cards__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .pricing-cards__header {
+    text-align: center;
+  }
+
+  .pricing-cards__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
+
+  .pricing-cards__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .pricing-cards__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition-base);
+  }
+
+  .pricing-cards__card:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .pricing-cards__card-name {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.2;
+  }
+
+  .pricing-cards__price {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1;
+  }
+
+  .pricing-cards__description {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .pricing-cards__features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    flex: 1;
+  }
+
+  .pricing-cards__feature {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    line-height: 1.5;
+  }
+
+  .pricing-cards__bullet {
+    color: var(--color-accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .pricing-cards__cta {
+    display: inline-block;
+    text-align: center;
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-surface);
+    background: var(--color-accent);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-2xl);
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    align-self: flex-start;
+  }
+
+  .pricing-cards__cta:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 768px) {
+    .pricing-cards__grid {
+      grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    }
+  }
+</style>

@@ -1,0 +1,261 @@
+---
+interface Props {
+  action: string
+  title?: string
+  services?: string[]
+}
+
+const budgetRanges = [
+  'Under $1,000',
+  '$1,000 - $5,000',
+  '$5,000 - $10,000',
+  '$10,000+',
+]
+
+const {
+  action,
+  title = 'Request a Quote',
+  services = [],
+} = Astro.props
+---
+
+<section
+  class="quote-request"
+  data-vf-component="QuoteRequest"
+  data-vf-file="src/components/forms/QuoteRequest.astro"
+>
+  <div class="quote-request__inner">
+    <header class="quote-request__header">
+      {title && <h2 class="quote-request__title">{title}</h2>}
+    </header>
+
+    <form
+      class="quote-request__form"
+      method="POST"
+      action={action}
+    >
+      <div class="quote-request__grid">
+        <div class="quote-request__field">
+          <label class="quote-request__label" for="quote-name">
+            Name
+            <span class="quote-request__required" aria-label="required">*</span>
+          </label>
+          <input
+            class="quote-request__input"
+            id="quote-name"
+            name="name"
+            type="text"
+            required
+            placeholder="Your full name"
+          />
+        </div>
+
+        <div class="quote-request__field">
+          <label class="quote-request__label" for="quote-email">
+            Email
+            <span class="quote-request__required" aria-label="required">*</span>
+          </label>
+          <input
+            class="quote-request__input"
+            id="quote-email"
+            name="email"
+            type="email"
+            required
+            placeholder="you@example.com"
+          />
+        </div>
+
+        <div class="quote-request__field">
+          <label class="quote-request__label" for="quote-phone">
+            Phone
+          </label>
+          <input
+            class="quote-request__input"
+            id="quote-phone"
+            name="phone"
+            type="tel"
+            placeholder="(555) 123-4567"
+          />
+        </div>
+
+        <div class="quote-request__field">
+          <label class="quote-request__label" for="quote-service">
+            Service
+            <span class="quote-request__required" aria-label="required">*</span>
+          </label>
+          <select
+            class="quote-request__select"
+            id="quote-service"
+            name="service"
+            required
+          >
+            <option value="" disabled selected>Select a service</option>
+            {services.map((service) => (
+              <option value={service}>{service}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div class="quote-request__field">
+        <label class="quote-request__label" for="quote-budget">
+          Budget Range
+        </label>
+        <select
+          class="quote-request__select"
+          id="quote-budget"
+          name="budget"
+        >
+          <option value="" disabled selected>Select a budget range</option>
+          {budgetRanges.map((range) => (
+            <option value={range}>{range}</option>
+          ))}
+        </select>
+      </div>
+
+      <div class="quote-request__field">
+        <label class="quote-request__label" for="quote-message">
+          Message
+          <span class="quote-request__required" aria-label="required">*</span>
+        </label>
+        <textarea
+          class="quote-request__textarea"
+          id="quote-message"
+          name="message"
+          required
+          placeholder="Tell us about your project"
+          rows="5"
+        />
+      </div>
+
+      <button type="submit" class="quote-request__submit">
+        Submit Request
+      </button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .quote-request {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg);
+  }
+
+  .quote-request__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .quote-request__header {
+    text-align: center;
+  }
+
+  .quote-request__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
+
+  .quote-request__form {
+    max-width: 40rem;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .quote-request__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .quote-request__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .quote-request__label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .quote-request__required {
+    color: var(--color-accent-dark);
+    margin-left: var(--space-xs);
+  }
+
+  .quote-request__input,
+  .quote-request__select,
+  .quote-request__textarea {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    outline: none;
+    width: 100%;
+  }
+
+  .quote-request__input::placeholder,
+  .quote-request__textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .quote-request__input:focus,
+  .quote-request__select:focus,
+  .quote-request__textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm), 0 0 0 var(--space-xs) var(--color-primary-light);
+  }
+
+  .quote-request__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-md) center;
+    padding-right: var(--space-2xl);
+  }
+
+  .quote-request__textarea {
+    resize: vertical;
+  }
+
+  .quote-request__submit {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-surface);
+    background: var(--color-accent);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-2xl);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    align-self: flex-start;
+  }
+
+  .quote-request__submit:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 768px) {
+    .quote-request__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

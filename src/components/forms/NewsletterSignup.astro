@@ -1,0 +1,165 @@
+---
+interface Props {
+  action: string
+  title?: string
+  subtitle?: string
+  buttonText?: string
+}
+
+const {
+  action,
+  title = 'Stay Updated',
+  subtitle,
+  buttonText = 'Subscribe',
+} = Astro.props
+---
+
+<section
+  class="newsletter-signup"
+  data-vf-component="NewsletterSignup"
+  data-vf-file="src/components/forms/NewsletterSignup.astro"
+>
+  <div class="newsletter-signup__inner">
+    <header class="newsletter-signup__header">
+      {title && <h2 class="newsletter-signup__title">{title}</h2>}
+      {subtitle && <p class="newsletter-signup__subtitle">{subtitle}</p>}
+    </header>
+
+    <form
+      class="newsletter-signup__form"
+      method="POST"
+      action={action}
+    >
+      <div class="newsletter-signup__row">
+        <label class="newsletter-signup__label" for="newsletter-email">
+          Email address
+        </label>
+        <input
+          class="newsletter-signup__input"
+          id="newsletter-email"
+          name="email"
+          type="email"
+          required
+          placeholder="you@example.com"
+        />
+        <button type="submit" class="newsletter-signup__submit">
+          {buttonText}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<style>
+  .newsletter-signup {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg-alt);
+  }
+
+  .newsletter-signup__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    align-items: center;
+    text-align: center;
+  }
+
+  .newsletter-signup__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .newsletter-signup__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
+
+  .newsletter-signup__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .newsletter-signup__form {
+    width: 100%;
+    max-width: 32rem;
+  }
+
+  .newsletter-signup__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .newsletter-signup__row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .newsletter-signup__input {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    outline: none;
+    width: 100%;
+  }
+
+  .newsletter-signup__input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .newsletter-signup__input:focus {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm), 0 0 0 var(--space-xs) var(--color-primary-light);
+  }
+
+  .newsletter-signup__submit {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-surface);
+    background: var(--color-accent);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-2xl);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .newsletter-signup__submit:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 768px) {
+    .newsletter-signup__row {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .newsletter-signup__input {
+      flex: 1;
+    }
+  }
+</style>
