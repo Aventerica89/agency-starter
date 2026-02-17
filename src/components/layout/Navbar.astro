@@ -1,0 +1,172 @@
+---
+interface Props {
+  siteName: string
+}
+
+const { siteName } = Astro.props
+
+const navLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'Services', href: '/services' },
+  { label: 'About', href: '/about' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Contact', href: '/contact' },
+]
+
+const currentPath = Astro.url.pathname
+---
+
+<nav
+  class="navbar"
+  data-vf-component="Navbar"
+  data-vf-file="src/components/layout/Navbar.astro"
+>
+  <div class="navbar__inner">
+    <a href="/" class="navbar__logo">{siteName}</a>
+
+    <button
+      class="navbar__toggle"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+      data-nav-toggle
+    >
+      <span class="navbar__toggle-bar"></span>
+      <span class="navbar__toggle-bar"></span>
+      <span class="navbar__toggle-bar"></span>
+    </button>
+
+    <ul class="navbar__links" data-nav-links>
+      {navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              'navbar__link',
+              { 'navbar__link--active': currentPath === link.href },
+            ]}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]')
+  const links = document.querySelector('[data-nav-links]')
+
+  if (toggle && links) {
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true'
+      toggle.setAttribute('aria-expanded', String(!expanded))
+      links.classList.toggle('navbar__links--open')
+    })
+  }
+</script>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .navbar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: var(--space-md) var(--container-padding);
+  }
+
+  .navbar__logo {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    transition: color var(--transition-fast);
+  }
+
+  .navbar__logo:hover {
+    color: var(--color-primary);
+  }
+
+  .navbar__toggle {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-xs);
+    background: none;
+    border: none;
+    padding: var(--space-sm);
+  }
+
+  .navbar__toggle-bar {
+    display: block;
+    width: var(--space-xl);
+    height: 2px;
+    background: var(--color-text);
+    border-radius: var(--radius-full);
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+  }
+
+  .navbar__links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    list-style: none;
+  }
+
+  .navbar__link {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+  }
+
+  .navbar__link:hover {
+    color: var(--color-primary);
+  }
+
+  .navbar__link--active {
+    color: var(--color-primary-dark);
+    font-weight: 600;
+  }
+
+  @media (max-width: 768px) {
+    .navbar__toggle {
+      display: flex;
+    }
+
+    .navbar__links {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-md) var(--container-padding);
+      gap: var(--space-sm);
+    }
+
+    .navbar__links--open {
+      display: flex;
+    }
+
+    .navbar__link {
+      width: 100%;
+      padding: var(--space-sm) var(--space-md);
+    }
+  }
+</style>

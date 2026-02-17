@@ -1,0 +1,54 @@
+---
+import '../styles/reset.css'
+import '../styles/theme.css'
+import Navbar from '../components/layout/Navbar.astro'
+import Footer from '../components/layout/Footer.astro'
+
+interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+}
+
+const {
+  title,
+  description = 'Welcome to our site',
+  ogImage,
+} = Astro.props
+const siteUrl = import.meta.env.SITE_URL ?? 'https://example.com'
+const siteName = import.meta.env.SITE_NAME ?? 'Agency Site'
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} | {siteName}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <link rel="canonical" href={siteUrl} />
+  </head>
+  <body>
+    <Navbar siteName={siteName} />
+    <main>
+      <slot />
+    </main>
+    <Footer siteName={siteName} />
+  </body>
+</html>
+
+<style is:global>
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  main {
+    flex: 1;
+  }
+</style>

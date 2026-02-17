@@ -1,0 +1,40 @@
+---
+interface Props {
+  siteName: string
+}
+
+const { siteName } = Astro.props
+const currentYear = new Date().getFullYear()
+---
+
+<footer
+  class="footer"
+  data-vf-component="Footer"
+  data-vf-file="src/components/layout/Footer.astro"
+>
+  <div class="footer__inner">
+    <p class="footer__copy">
+      &copy; {currentYear} {siteName}. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-primary-dark);
+    color: var(--color-bg);
+    padding: var(--space-xl) var(--container-padding);
+  }
+
+  .footer__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .footer__copy {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    opacity: 0.85;
+  }
+</style>

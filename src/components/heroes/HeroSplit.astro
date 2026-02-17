@@ -1,0 +1,145 @@
+---
+interface Props {
+  title: string
+  subtitle?: string
+  image: string
+  imageAlt?: string
+  ctaText?: string
+  ctaHref?: string
+  reversed?: boolean
+}
+
+const {
+  title,
+  subtitle,
+  image,
+  imageAlt = '',
+  ctaText,
+  ctaHref = '#',
+  reversed = false,
+} = Astro.props
+---
+
+<section
+  class:list={[
+    'hero-split',
+    { 'hero-split--reversed': reversed },
+  ]}
+  data-vf-component="HeroSplit"
+  data-vf-file="src/components/heroes/HeroSplit.astro"
+>
+  <div class="hero-split__inner">
+    <div class="hero-split__content">
+      <h1 class="hero-split__title">{title}</h1>
+      {subtitle && <p class="hero-split__subtitle">{subtitle}</p>}
+      {ctaText && (
+        <a href={ctaHref} class="hero-split__cta">{ctaText}</a>
+      )}
+    </div>
+    <div class="hero-split__media">
+      <img
+        src={image}
+        alt={imageAlt}
+        class="hero-split__image"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-split {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg-alt);
+  }
+
+  .hero-split__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .hero-split--reversed .hero-split__inner {
+    direction: rtl;
+  }
+
+  .hero-split--reversed .hero-split__content,
+  .hero-split--reversed .hero-split__media {
+    direction: ltr;
+  }
+
+  .hero-split__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .hero-split__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.1;
+  }
+
+  .hero-split__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .hero-split__cta {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--color-accent);
+    color: var(--color-surface);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hero-split__cta:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero-split__media {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .hero-split__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .hero-split__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .hero-split--reversed .hero-split__inner {
+      direction: ltr;
+    }
+
+    .hero-split__content {
+      text-align: center;
+      align-items: center;
+    }
+
+    .hero-split__cta {
+      align-self: center;
+    }
+  }
+</style>
