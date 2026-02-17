@@ -1,0 +1,196 @@
+---
+interface Field {
+  name: string
+  label: string
+  type: 'text' | 'email' | 'tel' | 'textarea'
+  required?: boolean
+  placeholder?: string
+}
+
+interface Props {
+  action: string
+  title?: string
+  subtitle?: string
+  fields?: Field[]
+}
+
+const defaultFields: Field[] = [
+  { name: 'name', label: 'Name', type: 'text', required: true, placeholder: 'Your full name' },
+  { name: 'email', label: 'Email', type: 'email', required: true, placeholder: 'you@example.com' },
+  { name: 'phone', label: 'Phone', type: 'tel', required: false, placeholder: '(555) 123-4567' },
+  { name: 'message', label: 'Message', type: 'textarea', required: true, placeholder: 'How can we help?' },
+]
+
+const {
+  action,
+  title = 'Get in Touch',
+  subtitle,
+  fields = defaultFields,
+} = Astro.props
+---
+
+<section
+  class="contact-form"
+  data-vf-component="ContactForm"
+  data-vf-file="src/components/forms/ContactForm.astro"
+>
+  <div class="contact-form__inner">
+    <header class="contact-form__header">
+      {title && <h2 class="contact-form__title">{title}</h2>}
+      {subtitle && <p class="contact-form__subtitle">{subtitle}</p>}
+    </header>
+
+    <form
+      class="contact-form__form"
+      method="POST"
+      action={action}
+    >
+      {fields.map((field) => (
+        <div class="contact-form__field">
+          <label class="contact-form__label" for={field.name}>
+            {field.label}
+            {field.required && <span class="contact-form__required" aria-label="required">*</span>}
+          </label>
+          {field.type === 'textarea' ? (
+            <textarea
+              class="contact-form__textarea"
+              id={field.name}
+              name={field.name}
+              required={field.required}
+              placeholder={field.placeholder}
+              rows="5"
+            />
+          ) : (
+            <input
+              class="contact-form__input"
+              id={field.name}
+              name={field.name}
+              type={field.type}
+              required={field.required}
+              placeholder={field.placeholder}
+            />
+          )}
+        </div>
+      ))}
+
+      <button type="submit" class="contact-form__submit">
+        Send Message
+      </button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact-form {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg-alt);
+  }
+
+  .contact-form__inner {
+    max-width: 40rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .contact-form__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .contact-form__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
+
+  .contact-form__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .contact-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .contact-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .contact-form__label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .contact-form__required {
+    color: var(--color-accent-dark);
+    margin-left: var(--space-xs);
+  }
+
+  .contact-form__input,
+  .contact-form__textarea {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    outline: none;
+  }
+
+  .contact-form__input::placeholder,
+  .contact-form__textarea::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .contact-form__input:focus,
+  .contact-form__textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-sm), 0 0 0 var(--space-xs) var(--color-primary-light);
+  }
+
+  .contact-form__textarea {
+    resize: vertical;
+  }
+
+  .contact-form__submit {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-surface);
+    background: var(--color-accent);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-2xl);
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    align-self: flex-start;
+  }
+
+  .contact-form__submit:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 768px) {
+    .contact-form__submit {
+      align-self: flex-start;
+    }
+  }
+</style>

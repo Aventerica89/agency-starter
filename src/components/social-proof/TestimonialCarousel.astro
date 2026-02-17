@@ -1,0 +1,159 @@
+---
+import type { Testimonial } from '../../lib/types'
+
+interface Props {
+  title?: string
+  testimonials: Testimonial[]
+}
+
+const {
+  title = 'What Our Clients Say',
+  testimonials,
+} = Astro.props
+
+function renderStars(rating: number): string {
+  const filled = Math.round(rating)
+  const empty = 5 - filled
+  return '\u2605'.repeat(filled) + '\u2606'.repeat(empty)
+}
+---
+
+<section
+  class="testimonial-carousel"
+  data-vf-component="TestimonialCarousel"
+  data-vf-file="src/components/social-proof/TestimonialCarousel.astro"
+>
+  <div class="testimonial-carousel__inner">
+    {title && <h2 class="testimonial-carousel__title">{title}</h2>}
+
+    <div class="testimonial-carousel__grid">
+      {testimonials.map((t) => (
+        <blockquote class="testimonial-carousel__card">
+          {t.rating != null && (
+            <p class="testimonial-carousel__stars" aria-label={`${t.rating} out of 5 stars`}>
+              {renderStars(t.rating)}
+            </p>
+          )}
+
+          <p class="testimonial-carousel__quote">&ldquo;{t.quote}&rdquo;</p>
+
+          <footer class="testimonial-carousel__author">
+            {t.avatar && (
+              <img
+                class="testimonial-carousel__avatar"
+                src={t.avatar}
+                alt={t.author}
+                width="48"
+                height="48"
+                loading="lazy"
+              />
+            )}
+            <div class="testimonial-carousel__meta">
+              <cite class="testimonial-carousel__name">{t.author}</cite>
+              {t.role && <span class="testimonial-carousel__role">{t.role}</span>}
+            </div>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial-carousel {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg);
+  }
+
+  .testimonial-carousel__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+  }
+
+  .testimonial-carousel__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  .testimonial-carousel__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-carousel__grid {
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    }
+  }
+
+  .testimonial-carousel__card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    margin: 0;
+  }
+
+  .testimonial-carousel__stars {
+    font-size: var(--text-lg);
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .testimonial-carousel__quote {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text);
+    line-height: 1.6;
+    font-style: italic;
+    flex: 1;
+  }
+
+  .testimonial-carousel__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    margin-top: var(--space-sm);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-md);
+  }
+
+  .testimonial-carousel__avatar {
+    width: var(--space-3xl);
+    height: var(--space-3xl);
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+
+  .testimonial-carousel__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .testimonial-carousel__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text);
+    font-style: normal;
+  }
+
+  .testimonial-carousel__role {
+    font-family: var(--font-body);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+</style>
