@@ -1,0 +1,146 @@
+---
+interface Props {
+  title: string
+  description: string
+  ctaText: string
+  ctaHref: string
+  image: string
+  imageAlt?: string
+  reversed?: boolean
+}
+
+const {
+  title,
+  description,
+  ctaText,
+  ctaHref,
+  image,
+  imageAlt = '',
+  reversed = false,
+} = Astro.props
+---
+
+<section
+  class:list={[
+    'cta-split',
+    { 'cta-split--reversed': reversed },
+  ]}
+  data-vf-component="CTASplit"
+  data-vf-file="src/components/cta/CTASplit.astro"
+>
+  <div class="cta-split__inner">
+    <div class="cta-split__content">
+      <h2 class="cta-split__title">{title}</h2>
+      <p class="cta-split__description">{description}</p>
+      <a href={ctaHref} class="cta-split__cta">{ctaText}</a>
+    </div>
+    <div class="cta-split__media">
+      <img
+        src={image}
+        alt={imageAlt}
+        class="cta-split__image"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-split {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg);
+  }
+
+  .cta-split__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+    max-width: var(--container-max);
+    margin: 0 auto;
+  }
+
+  .cta-split--reversed .cta-split__content {
+    order: 2;
+  }
+
+  .cta-split--reversed .cta-split__media {
+    order: 1;
+  }
+
+  .cta-split__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .cta-split__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
+
+  .cta-split__description {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .cta-split__cta {
+    display: inline-block;
+    align-self: flex-start;
+    background: var(--color-accent);
+    color: var(--color-surface);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cta-split__cta:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  .cta-split__media {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .cta-split__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .cta-split__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .cta-split--reversed .cta-split__content {
+      order: 1;
+    }
+
+    .cta-split--reversed .cta-split__media {
+      order: 2;
+    }
+
+    .cta-split__content {
+      text-align: center;
+      align-items: center;
+    }
+
+    .cta-split__cta {
+      align-self: center;
+    }
+  }
+</style>

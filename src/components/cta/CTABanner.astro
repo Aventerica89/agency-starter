@@ -1,0 +1,116 @@
+---
+interface Props {
+  title: string
+  subtitle?: string
+  ctaText: string
+  ctaHref: string
+  variant?: 'primary' | 'accent'
+}
+
+const {
+  title,
+  subtitle,
+  ctaText,
+  ctaHref,
+  variant = 'primary',
+} = Astro.props
+---
+
+<section
+  class:list={[
+    'cta-banner',
+    `cta-banner--${variant}`,
+  ]}
+  data-vf-component="CTABanner"
+  data-vf-file="src/components/cta/CTABanner.astro"
+>
+  <div class="cta-banner__inner">
+    <div class="cta-banner__content">
+      <h2 class="cta-banner__title">{title}</h2>
+      {subtitle && <p class="cta-banner__subtitle">{subtitle}</p>}
+    </div>
+    <a href={ctaHref} class="cta-banner__cta">{ctaText}</a>
+  </div>
+</section>
+
+<style>
+  .cta-banner {
+    padding: var(--space-section) var(--container-padding);
+  }
+
+  .cta-banner--primary {
+    background: var(--color-primary-dark);
+  }
+
+  .cta-banner--accent {
+    background: var(--color-accent);
+  }
+
+  .cta-banner__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+    text-align: center;
+  }
+
+  .cta-banner__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .cta-banner__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-surface);
+    line-height: 1.2;
+  }
+
+  .cta-banner__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-surface);
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  .cta-banner--primary .cta-banner__cta {
+    display: inline-block;
+    background: var(--color-accent);
+    color: var(--color-surface);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cta-banner--primary .cta-banner__cta:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  .cta-banner--accent .cta-banner__cta {
+    display: inline-block;
+    background: var(--color-surface);
+    color: var(--color-accent-dark);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cta-banner--accent .cta-banner__cta:hover {
+    background: var(--color-bg-alt);
+    box-shadow: var(--shadow-md);
+  }
+</style>

@@ -1,0 +1,82 @@
+---
+interface Props {
+  stats: Array<{ value: string; label: string }>
+}
+
+const { stats } = Astro.props
+---
+
+<section
+  class="stats-bar"
+  data-vf-component="StatsBar"
+  data-vf-file="src/components/social-proof/StatsBar.astro"
+>
+  <div class="stats-bar__inner">
+    {stats.map((stat) => (
+      <div class="stats-bar__item">
+        <span class="stats-bar__value">{stat.value}</span>
+        <span class="stats-bar__label">{stat.label}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .stats-bar {
+    padding: var(--space-2xl) var(--container-padding);
+    background: var(--color-primary-dark);
+  }
+
+  .stats-bar__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .stats-bar__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-lg) var(--space-xl);
+    border-right: 1px solid var(--color-primary-light);
+  }
+
+  .stats-bar__item:last-child {
+    border-right: none;
+  }
+
+  .stats-bar__value {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-surface);
+    line-height: 1.1;
+  }
+
+  .stats-bar__label {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-accent-light);
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .stats-bar__inner {
+      flex-direction: column;
+    }
+
+    .stats-bar__item {
+      border-right: none;
+      border-bottom: 1px solid var(--color-primary-light);
+      padding: var(--space-lg) var(--space-md);
+    }
+
+    .stats-bar__item:last-child {
+      border-bottom: none;
+    }
+  }
+</style>

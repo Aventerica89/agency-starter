@@ -1,0 +1,162 @@
+---
+import type { Testimonial } from '../../lib/types'
+
+interface Props {
+  testimonial: Testimonial
+}
+
+const { testimonial } = Astro.props
+
+function renderStars(rating: number): string {
+  const filled = Math.round(rating)
+  const empty = 5 - filled
+  return '\u2605'.repeat(filled) + '\u2606'.repeat(empty)
+}
+---
+
+<section
+  class="testimonial-single"
+  data-vf-component="TestimonialSingle"
+  data-vf-file="src/components/social-proof/TestimonialSingle.astro"
+>
+  <div class="testimonial-single__inner">
+    <blockquote class="testimonial-single__block">
+      <div class="testimonial-single__quote-wrap">
+        <p class="testimonial-single__quote">&ldquo;{testimonial.quote}&rdquo;</p>
+      </div>
+
+      {testimonial.rating != null && (
+        <p
+          class="testimonial-single__stars"
+          aria-label={`${testimonial.rating} out of 5 stars`}
+        >
+          {renderStars(testimonial.rating)}
+        </p>
+      )}
+
+      <footer class="testimonial-single__author">
+        {testimonial.avatar && (
+          <img
+            class="testimonial-single__avatar"
+            src={testimonial.avatar}
+            alt={testimonial.author}
+            width="64"
+            height="64"
+            loading="lazy"
+          />
+        )}
+        <div class="testimonial-single__meta">
+          <cite class="testimonial-single__name">{testimonial.author}</cite>
+          {testimonial.role && (
+            <span class="testimonial-single__role">{testimonial.role}</span>
+          )}
+        </div>
+      </footer>
+    </blockquote>
+  </div>
+</section>
+
+<style>
+  .testimonial-single {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg-alt);
+  }
+
+  .testimonial-single__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .testimonial-single__block {
+    max-width: 48rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+    text-align: center;
+    margin: 0;
+  }
+
+  .testimonial-single__quote-wrap {
+    position: relative;
+  }
+
+  .testimonial-single__quote-wrap::before {
+    content: '\201C';
+    position: absolute;
+    top: calc(-1 * var(--space-xl));
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-heading);
+    font-size: var(--text-4xl);
+    color: var(--color-accent-light);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .testimonial-single__quote {
+    font-family: var(--font-body);
+    font-size: var(--text-2xl);
+    color: var(--color-text);
+    line-height: 1.5;
+    font-style: italic;
+    padding-top: var(--space-2xl);
+  }
+
+  .testimonial-single__stars {
+    font-size: var(--text-xl);
+    color: var(--color-accent);
+    line-height: 1;
+  }
+
+  .testimonial-single__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .testimonial-single__avatar {
+    width: var(--space-3xl);
+    height: var(--space-3xl);
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    box-shadow: var(--shadow-md);
+  }
+
+  .testimonial-single__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    text-align: left;
+  }
+
+  .testimonial-single__name {
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-text);
+    font-style: normal;
+  }
+
+  .testimonial-single__role {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+  }
+
+  @media (max-width: 768px) {
+    .testimonial-single__quote {
+      font-size: var(--text-lg);
+    }
+
+    .testimonial-single__author {
+      flex-direction: column;
+    }
+
+    .testimonial-single__meta {
+      text-align: center;
+    }
+  }
+</style>

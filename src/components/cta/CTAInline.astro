@@ -1,0 +1,65 @@
+---
+interface Props {
+  text: string
+  ctaText: string
+  ctaHref: string
+}
+
+const { text, ctaText, ctaHref } = Astro.props
+---
+
+<div
+  class="cta-inline"
+  data-vf-component="CTAInline"
+  data-vf-file="src/components/cta/CTAInline.astro"
+>
+  <p class="cta-inline__text">{text}</p>
+  <a href={ctaHref} class="cta-inline__cta">{ctaText}</a>
+</div>
+
+<style>
+  .cta-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-lg);
+  }
+
+  .cta-inline__text {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text);
+    line-height: 1.5;
+  }
+
+  .cta-inline__cta {
+    display: inline-block;
+    flex-shrink: 0;
+    background: var(--color-accent);
+    color: var(--color-surface);
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--space-sm) var(--space-xl);
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .cta-inline__cta:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (max-width: 768px) {
+    .cta-inline {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .cta-inline__cta {
+      align-self: center;
+    }
+  }
+</style>
