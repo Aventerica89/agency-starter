@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro'
+import HeroMinimal from '../components/heroes/HeroMinimal.astro'
+import FeatureAlternating from '../components/features/FeatureAlternating.astro'
+import PricingTable from '../components/pricing/PricingTable.astro'
+import CTABanner from '../components/cta/CTABanner.astro'
+
+const services = [
+  {
+    title: 'Custom Facials',
+    description:
+      'Our signature facials are tailored to your unique skin type and concerns. Using medical-grade products and advanced techniques, we deliver visible results from the very first session. Whether you need deep hydration, acne control, or anti-aging support, our aestheticians craft a personalized treatment plan just for you.',
+    image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&h=400&fit=crop',
+    imageAlt: 'Woman receiving a facial treatment',
+  },
+  {
+    title: 'Botox & Dermal Fillers',
+    description:
+      'Smooth fine lines and restore youthful volume with our expert injection services. Our board-certified providers use only FDA-approved products to deliver natural-looking results. Every treatment begins with a thorough consultation so we understand your aesthetic goals before we begin.',
+    image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&h=400&fit=crop',
+    imageAlt: 'Medical professional preparing injectable treatment',
+  },
+  {
+    title: 'Laser Skin Resurfacing',
+    description:
+      'Transform your complexion with our state-of-the-art laser treatments. From pigmentation correction and scar reduction to full skin rejuvenation, our advanced laser technology targets concerns at the cellular level. Minimal downtime, maximum impact.',
+    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&h=400&fit=crop',
+    imageAlt: 'Advanced laser treatment device in a clinical setting',
+  },
+]
+
+const plans = [
+  {
+    name: 'Basic',
+    price: '$99',
+    period: '/month',
+    features: [
+      '1 facial per month',
+      'Skin analysis consultation',
+      '10% off retail products',
+      'Online booking access',
+    ],
+    ctaText: 'Get Started',
+    ctaHref: '/contact',
+  },
+  {
+    name: 'Premium',
+    price: '$199',
+    period: '/month',
+    features: [
+      '2 facials per month',
+      'Priority scheduling',
+      '1 chemical peel per quarter',
+      '20% off retail products',
+      'Complimentary touch-ups',
+    ],
+    ctaText: 'Most Popular',
+    ctaHref: '/contact',
+    highlighted: true,
+  },
+  {
+    name: 'VIP',
+    price: '$349',
+    period: '/month',
+    features: [
+      'Unlimited facials',
+      'Monthly Botox maintenance',
+      'Quarterly laser treatment',
+      '30% off all services',
+      'Dedicated aesthetician',
+      'After-hours appointments',
+    ],
+    ctaText: 'Go VIP',
+    ctaHref: '/contact',
+  },
+]
+---
+
+<Base title="Services" description="Explore our premium skincare and aesthetic treatments.">
+  <HeroMinimal
+    title="Our Services"
+    subtitle="From rejuvenating facials to advanced laser treatments, we offer a full range of medical-grade aesthetic services tailored to your goals."
+  />
+  <FeatureAlternating
+    title="What We Offer"
+    subtitle="Each treatment is personalized to deliver results you can see and feel."
+    items={services}
+  />
+  <PricingTable
+    title="Membership Plans"
+    plans={plans}
+  />
+  <CTABanner
+    title="Ready to Transform?"
+    subtitle="Book your complimentary consultation and let us design a treatment plan just for you."
+    ctaText="Book Now"
+    ctaHref="/contact"
+    variant="accent"
+  />
+</Base>

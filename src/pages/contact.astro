@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro'
+import HeroMinimal from '../components/heroes/HeroMinimal.astro'
+import ContactForm from '../components/forms/ContactForm.astro'
+import MapEmbed from '../components/integrations/MapEmbed.astro'
+import CalEmbed from '../components/integrations/CalEmbed.astro'
+
+const mapUrl = [
+  'https://www.google.com/maps/embed?pb=',
+  '!1m18!1m12!1m3!1d3153.8354345094747',
+  '!2d-122.4194!3d37.7749',
+  '!2m3!1f0!2f0!3f0',
+  '!3m2!1i1024!2i768!4f13.1',
+  '!3m3!1m2!1s0x0%3A0x0!2zM3',
+  '!5e0!3m2!1sen!2sus!4v1',
+].join('')
+---
+
+<Base title="Contact Us" description="Get in touch to book your consultation or ask us anything.">
+  <HeroMinimal
+    title="Contact Us"
+    subtitle="We would love to hear from you. Reach out to book a consultation, ask a question, or simply say hello."
+  />
+  <ContactForm
+    action="https://forms.jbcloud.app/demo"
+    title="Send Us a Message"
+    subtitle="Fill out the form below and we will get back to you within 24 hours."
+  />
+  <MapEmbed
+    embedUrl={mapUrl}
+    title="Find Us"
+  />
+  <CalEmbed
+    calLink="https://cal.com/demo/consultation"
+    title="Book an Appointment"
+    subtitle="Choose a time that works for you and we will handle the rest."
+  />
+</Base>

@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/Base.astro'
+import HeroMinimal from '../components/heroes/HeroMinimal.astro'
+import TeamGrid from '../components/content/TeamGrid.astro'
+import StatsBar from '../components/social-proof/StatsBar.astro'
+import TestimonialSingle from '../components/social-proof/TestimonialSingle.astro'
+import CTABanner from '../components/cta/CTABanner.astro'
+import type { TeamMember, Testimonial } from '../lib/types'
+
+const team: TeamMember[] = [
+  {
+    name: 'Dr. Sarah Chen',
+    role: 'Medical Director',
+    bio: 'Board-certified in dermatology with over 15 years of experience in aesthetic medicine. Dr. Chen leads our clinical team and oversees all advanced procedures.',
+    photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face',
+    order: 1,
+  },
+  {
+    name: 'James Rodriguez',
+    role: 'Lead Aesthetician',
+    bio: 'Licensed master aesthetician specializing in chemical peels, microneedling, and corrective skincare. James brings 8 years of hands-on expertise to every treatment.',
+    photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300&h=300&fit=crop&crop=face',
+    order: 2,
+  },
+  {
+    name: 'Emily Park',
+    role: 'Client Relations Director',
+    bio: 'Emily ensures every client feels welcomed and cared for from the moment they walk in. She manages scheduling, follow-ups, and our membership programs.',
+    photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=300&h=300&fit=crop&crop=face',
+    order: 3,
+  },
+  {
+    name: 'Dr. Michael Torres',
+    role: 'Dermatologist',
+    bio: 'Fellowship-trained in cosmetic dermatology, Dr. Torres specializes in laser treatments and injectable artistry. His precision and eye for detail are unmatched.',
+    photo: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face',
+    order: 4,
+  },
+]
+
+const stats = [
+  { value: '500+', label: 'Happy Clients' },
+  { value: '10', label: 'Years Experience' },
+  { value: '5.0', label: 'Star Rating' },
+  { value: '15+', label: 'Treatments Offered' },
+]
+
+const spotlight: Testimonial = {
+  quote: 'I have been coming here for two years and the results keep getting better. The entire team genuinely cares about my skin goals and takes the time to explain every step. I would not trust anyone else with my face.',
+  author: 'Maria Gonzalez',
+  role: 'VIP Member since 2024',
+  rating: 5,
+}
+---
+
+<Base title="About Us" description="Meet the team behind our award-winning med spa.">
+  <HeroMinimal
+    title="About Us"
+    subtitle="A passionate team of medical professionals and skincare experts dedicated to helping you look and feel your absolute best."
+  />
+  <TeamGrid
+    title="Meet the Team"
+    subtitle="The people who make the difference."
+    members={team}
+    columns={4}
+  />
+  <StatsBar stats={stats} />
+  <TestimonialSingle testimonial={spotlight} />
+  <CTABanner
+    title="Join Our Family"
+    subtitle="Experience personalized care from a team that puts your well-being first."
+    ctaText="Book a Consultation"
+    ctaHref="/contact"
+    variant="primary"
+  />
+</Base>

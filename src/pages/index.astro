@@ -1,8 +1,11 @@
 ---
 import Base from '../layouts/Base.astro'
 import HeroCentered from '../components/heroes/HeroCentered.astro'
+import LogoCloud from '../components/social-proof/LogoCloud.astro'
 import FeatureGrid from '../components/features/FeatureGrid.astro'
+import StatsBar from '../components/social-proof/StatsBar.astro'
 import TestimonialCarousel from '../components/social-proof/TestimonialCarousel.astro'
+import CTABanner from '../components/cta/CTABanner.astro'
 import ContactForm from '../components/forms/ContactForm.astro'
 import type { Service, Testimonial } from '../lib/types'
 
@@ -17,6 +20,21 @@ const testimonials: Testimonial[] = [
   { quote: 'Finally found a team I trust. They listen to what I want and deliver every time.', author: 'Jessica L.', role: 'Client since 2023', rating: 5 },
   { quote: 'My skin has never looked better. Worth every penny.', author: 'Amanda R.', role: 'Client since 2025', rating: 5 },
 ]
+
+const logos = [
+  { src: 'https://placehold.co/120x40/6B705C/FFFCF7?text=Vogue', alt: 'Vogue' },
+  { src: 'https://placehold.co/120x40/6B705C/FFFCF7?text=Allure', alt: 'Allure' },
+  { src: 'https://placehold.co/120x40/6B705C/FFFCF7?text=Byrdie', alt: 'Byrdie' },
+  { src: 'https://placehold.co/120x40/6B705C/FFFCF7?text=Glamour', alt: 'Glamour' },
+  { src: 'https://placehold.co/120x40/6B705C/FFFCF7?text=Elle', alt: 'Elle' },
+]
+
+const stats = [
+  { value: '500+', label: 'Happy Clients' },
+  { value: '10', label: 'Years Experience' },
+  { value: '5.0', label: 'Star Rating' },
+  { value: '15+', label: 'Treatments Offered' },
+]
 ---
 
 <Base title="Home" description="Premium skincare and wellness treatments tailored to you.">
@@ -26,13 +44,25 @@ const testimonials: Testimonial[] = [
     ctaText="Book Consultation"
     ctaHref="/contact"
   />
+  <LogoCloud
+    title="Trusted by leading brands"
+    logos={logos}
+  />
   <FeatureGrid
     title="Our Services"
     subtitle="Discover treatments designed for your unique needs."
     items={services}
     columns={3}
   />
+  <StatsBar stats={stats} />
   <TestimonialCarousel testimonials={testimonials} />
+  <CTABanner
+    title="Start Your Journey Today"
+    subtitle="Take the first step toward the skin you have always wanted."
+    ctaText="Book Free Consultation"
+    ctaHref="/contact"
+    variant="primary"
+  />
   <ContactForm
     action="https://forms.jbcloud.app/demo"
     title="Ready to Get Started?"

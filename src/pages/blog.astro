@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro'
+import HeroMinimal from '../components/heroes/HeroMinimal.astro'
+import BlogGrid from '../components/content/BlogGrid.astro'
+import type { BlogPost } from '../lib/types'
+
+const posts: BlogPost[] = [
+  {
+    slug: '5-benefits-of-regular-facials',
+    title: '5 Benefits of Regular Facials',
+    excerpt: 'Regular facials do more than just relax you. Discover how consistent treatments can transform your skin health, reduce breakouts, and slow the aging process.',
+    body: '',
+    category: 'Skincare',
+    publishedAt: '2026-02-10',
+    coverImage: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&h=340&fit=crop',
+  },
+  {
+    slug: 'botox-myths-debunked',
+    title: 'Botox Myths Debunked',
+    excerpt: 'Frozen face? Dangerous chemicals? We separate fact from fiction and explain what modern Botox treatments really involve.',
+    body: '',
+    category: 'Treatments',
+    publishedAt: '2026-02-05',
+    coverImage: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600&h=340&fit=crop',
+  },
+  {
+    slug: 'summer-skincare-routine',
+    title: 'Summer Skincare Routine',
+    excerpt: 'Sun, sweat, and humidity can wreak havoc on your skin. Learn the essential steps to protect and nourish your complexion all season long.',
+    body: '',
+    category: 'Skincare',
+    publishedAt: '2026-01-28',
+    coverImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=340&fit=crop',
+  },
+  {
+    slug: 'chemical-peels-what-to-expect',
+    title: 'Chemical Peels: What to Expect',
+    excerpt: 'Thinking about a chemical peel? Here is everything you need to know about preparation, the procedure itself, and aftercare for optimal results.',
+    body: '',
+    category: 'Treatments',
+    publishedAt: '2026-01-20',
+    coverImage: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&h=340&fit=crop',
+  },
+  {
+    slug: 'the-rise-of-preventive-aesthetics',
+    title: 'The Rise of Preventive Aesthetics',
+    excerpt: 'More people in their 20s and 30s are investing in preventive treatments. We explore why starting early can save your skin in the long run.',
+    body: '',
+    category: 'Wellness',
+    publishedAt: '2026-01-15',
+    coverImage: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&h=340&fit=crop',
+  },
+  {
+    slug: 'how-to-choose-your-first-treatment',
+    title: 'How to Choose Your First Treatment',
+    excerpt: 'Overwhelmed by the options? Our guide walks first-time clients through selecting the right treatment based on skin type, goals, and budget.',
+    body: '',
+    category: 'Wellness',
+    publishedAt: '2026-01-08',
+    coverImage: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&h=340&fit=crop',
+  },
+]
+---
+
+<Base title="Blog" description="Skincare tips, treatment guides, and wellness insights from our experts.">
+  <HeroMinimal
+    title="Our Blog"
+    subtitle="Expert skincare tips, treatment deep-dives, and wellness advice to help you make informed decisions about your beauty journey."
+  />
+  <BlogGrid
+    title="Latest Articles"
+    posts={posts}
+    columns={3}
+  />
+</Base>
