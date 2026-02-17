@@ -1,0 +1,156 @@
+---
+interface AlternatingItem {
+  title: string
+  description: string
+  image: string
+  imageAlt?: string
+}
+
+interface Props {
+  title?: string
+  subtitle?: string
+  items: AlternatingItem[]
+}
+
+const {
+  title,
+  subtitle,
+  items,
+} = Astro.props
+---
+
+<section
+  class="feature-alternating"
+  data-vf-component="FeatureAlternating"
+  data-vf-file="src/components/features/FeatureAlternating.astro"
+>
+  <div class="feature-alternating__inner">
+    {(title || subtitle) && (
+      <header class="feature-alternating__header">
+        {title && <h2 class="feature-alternating__title">{title}</h2>}
+        {subtitle && (
+          <p class="feature-alternating__subtitle">{subtitle}</p>
+        )}
+      </header>
+    )}
+    <div class="feature-alternating__rows">
+      {items.map((item) => (
+        <div class="feature-alternating__row">
+          <div class="feature-alternating__media">
+            <img
+              class="feature-alternating__image"
+              src={item.image}
+              alt={item.imageAlt || item.title}
+              loading="lazy"
+            />
+          </div>
+          <div class="feature-alternating__content">
+            <h3 class="feature-alternating__item-title">{item.title}</h3>
+            <p class="feature-alternating__item-desc">{item.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-alternating {
+    padding: var(--space-section) var(--container-padding);
+    background: var(--color-bg);
+  }
+
+  .feature-alternating__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+  }
+
+  .feature-alternating__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .feature-alternating__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
+
+  .feature-alternating__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .feature-alternating__rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xl);
+  }
+
+  .feature-alternating__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .feature-alternating__media {
+    order: 0;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+  }
+
+  .feature-alternating__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  .feature-alternating__content {
+    order: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .feature-alternating__item-title {
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--color-text);
+    line-height: 1.3;
+  }
+
+  .feature-alternating__item-desc {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  @media (min-width: 768px) {
+    .feature-alternating__row {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+    }
+
+    .feature-alternating__row:nth-child(even) .feature-alternating__media {
+      order: 2;
+    }
+
+    .feature-alternating__row:nth-child(even) .feature-alternating__content {
+      order: 1;
+    }
+  }
+</style>
