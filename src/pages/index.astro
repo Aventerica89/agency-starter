@@ -1,13 +1,41 @@
 ---
 import Base from '../layouts/Base.astro'
 import HeroCentered from '../components/heroes/HeroCentered.astro'
+import FeatureGrid from '../components/features/FeatureGrid.astro'
+import TestimonialCarousel from '../components/social-proof/TestimonialCarousel.astro'
+import ContactForm from '../components/forms/ContactForm.astro'
+import type { Service, Testimonial } from '../lib/types'
+
+const services: Service[] = [
+  { slug: 'facials', title: 'Custom Facials', description: 'Personalized treatments for radiant, healthy skin.', icon: '✨', order: 1 },
+  { slug: 'botox', title: 'Botox & Fillers', description: 'Natural-looking results from experienced injectors.', icon: '💉', order: 2 },
+  { slug: 'laser', title: 'Laser Treatments', description: 'Advanced technology for skin resurfacing and hair removal.', icon: '⚡', order: 3 },
+]
+
+const testimonials: Testimonial[] = [
+  { quote: 'The best med spa experience. Professional, clean, and the results speak for themselves.', author: 'Sarah M.', role: 'Client since 2024', rating: 5 },
+  { quote: 'Finally found a team I trust. They listen to what I want and deliver every time.', author: 'Jessica L.', role: 'Client since 2023', rating: 5 },
+  { quote: 'My skin has never looked better. Worth every penny.', author: 'Amanda R.', role: 'Client since 2025', rating: 5 },
+]
 ---
 
 <Base title="Home" description="Premium skincare and wellness treatments tailored to you.">
   <HeroCentered
     title="Your Beauty, Elevated"
-    subtitle="Premium skincare and wellness treatments tailored to you."
+    subtitle="Premium skincare and wellness treatments tailored to you. Expert care in a luxurious setting."
     ctaText="Book Consultation"
     ctaHref="/contact"
+  />
+  <FeatureGrid
+    title="Our Services"
+    subtitle="Discover treatments designed for your unique needs."
+    items={services}
+    columns={3}
+  />
+  <TestimonialCarousel testimonials={testimonials} />
+  <ContactForm
+    action="https://forms.jbcloud.app/demo"
+    title="Ready to Get Started?"
+    subtitle="Book your free consultation today."
   />
 </Base>
