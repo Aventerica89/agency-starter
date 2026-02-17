@@ -1,0 +1,81 @@
+---
+interface Props {
+  href: string
+  text?: string
+  price?: string
+  variant?: 'primary' | 'accent'
+}
+
+const {
+  href,
+  text = 'Buy Now',
+  price,
+  variant = 'primary',
+} = Astro.props
+---
+
+<div
+  class:list={[
+    'stripe-button',
+    `stripe-button--${variant}`,
+  ]}
+  data-vf-component="StripeButton"
+  data-vf-file="src/components/integrations/StripeButton.astro"
+>
+  <a href={href} class="stripe-button__link">
+    <span class="stripe-button__text">{text}</span>
+    {price && <span class="stripe-button__price">{price}</span>}
+  </a>
+</div>
+
+<style>
+  .stripe-button {
+    display: inline-block;
+  }
+
+  .stripe-button__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    font-weight: 600;
+    padding: var(--space-md) var(--space-2xl);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition: background var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .stripe-button--primary .stripe-button__link {
+    background: var(--color-primary);
+    color: var(--color-surface);
+  }
+
+  .stripe-button--primary .stripe-button__link:hover {
+    background: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  .stripe-button--accent .stripe-button__link {
+    background: var(--color-accent);
+    color: var(--color-surface);
+  }
+
+  .stripe-button--accent .stripe-button__link:hover {
+    background: var(--color-accent-dark);
+    box-shadow: var(--shadow-md);
+  }
+
+  .stripe-button__text {
+    line-height: 1.2;
+  }
+
+  .stripe-button__price {
+    font-size: var(--text-sm);
+    opacity: 0.85;
+    padding-left: var(--space-sm);
+    border-left: 1px solid currentColor;
+    line-height: 1.2;
+  }
+</style>

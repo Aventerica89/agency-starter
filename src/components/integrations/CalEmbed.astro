@@ -1,0 +1,97 @@
+---
+interface Props {
+  calLink: string
+  title?: string
+  subtitle?: string
+}
+
+const {
+  calLink,
+  title,
+  subtitle,
+} = Astro.props
+---
+
+<section
+  class="cal-embed"
+  data-vf-component="CalEmbed"
+  data-vf-file="src/components/integrations/CalEmbed.astro"
+>
+  <div class="cal-embed__inner">
+    {(title || subtitle) && (
+      <header class="cal-embed__header">
+        {title && <h2 class="cal-embed__title">{title}</h2>}
+        {subtitle && <p class="cal-embed__subtitle">{subtitle}</p>}
+      </header>
+    )}
+
+    <div class="cal-embed__frame-wrapper" style="--cal-height: 600px;">
+      <iframe
+        class="cal-embed__iframe"
+        src={calLink}
+        loading="lazy"
+        title={title || 'Schedule a meeting'}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .cal-embed {
+    padding: var(--space-section) var(--container-padding);
+  }
+
+  .cal-embed__inner {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xl);
+  }
+
+  .cal-embed__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .cal-embed__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
+
+  .cal-embed__subtitle {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .cal-embed__frame-wrapper {
+    width: 100%;
+    height: var(--cal-height);
+    background: var(--color-bg-alt);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .cal-embed__iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  @media (max-width: 768px) {
+    .cal-embed__frame-wrapper {
+      --cal-height: 500px;
+    }
+
+    .cal-embed__title {
+      font-size: var(--text-2xl);
+    }
+  }
+</style>
